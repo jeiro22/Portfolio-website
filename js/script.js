@@ -3,91 +3,124 @@ document.addEventListener('DOMContentLoaded', function () {
     const wipGalleryContainer = document.getElementById('wipGallery');
 
     // Function to create image containers
-    function createImageContainers(container, urls) {
-        urls.forEach(url => {
-            const imgContainer = document.createElement('div');
-            imgContainer.classList.add('img-container');
+    
+// Update the function to read from objects:
+function createImageContainers(container, items) {
+    items.forEach(item => {
+        const url = typeof item === 'string' ? item : item.url;
+        const title = item.title || '';
+        const description = item.description || '';
+        const year = item.year || '';
 
-            const img = document.createElement('img');
-            img.src = url;
-            img.alt = 'Gallery Image';
+        const imgContainer = document.createElement('div');
+        imgContainer.classList.add('img-container');
 
-            const overlay = document.createElement('div');
-            overlay.classList.add('overlay');
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = title || 'Gallery Image';
 
-            const overlayImg = document.createElement('img');
-            overlayImg.src = url;
-            overlayImg.alt = 'Gallery Image Overlay';
+        const overlay = document.createElement('div');
+        overlay.classList.add('overlay');
 
-            overlay.appendChild(overlayImg);
-            imgContainer.appendChild(img);
-            imgContainer.appendChild(overlay);
-            container.appendChild(imgContainer);
+        const overlayImg = document.createElement('img');
+        overlayImg.src = url;
+        overlayImg.alt = title || 'Gallery Image Overlay';
 
-            // Add click event listener to each image container
-            imgContainer.addEventListener('click', function () {
-                imgContainer.classList.toggle('expanded');
-            });
+        overlay.appendChild(overlayImg);
+
+        // Build caption only if title or description exists
+        if (title || description) {
+            const caption = document.createElement('div');
+            caption.classList.add('img-caption');
+
+            if (title) {
+                const titleEl = document.createElement('span');
+                titleEl.classList.add('img-caption-title');
+                titleEl.textContent = title;
+                caption.appendChild(titleEl);
+            }
+            if (description) {
+                const descEl = document.createElement('span');
+                descEl.classList.add('img-caption-desc');
+                descEl.textContent = description;
+                caption.appendChild(descEl);
+            }
+            if (year) {
+                const yearEl = document.createElement('span');
+                yearEl.classList.add('img-caption-year');
+                yearEl.textContent = year;
+                caption.appendChild(yearEl);
+            }
+            imgContainer.appendChild(caption);
+        }
+
+        imgContainer.appendChild(img);
+        imgContainer.appendChild(overlay);
+        container.appendChild(imgContainer);
+
+        imgContainer.addEventListener('click', function () {
+            imgContainer.classList.toggle('expanded');
         });
-    }
+    });
+}
 
     // Example image URLs
     const galleryImageUrls = [
-        'images/artworks/ellenjoe.png',
-        'images/artworks/miyabifinished.png',
-		'images/artworks/ronova.jpg',
+        { url: 'images/artworks/ellenjoe.png', title: 'Ellen Joe', description: 'Character fanart', year: '2024'},
+        { url: 'images/artworks/miyabifinished.png', title: 'Miyabi', description: 'Character fanart', year: '2025' },
+        { url: 'images/artworks/ronova.jpg', title: 'Ronova', description: 'Character fanart', year: '2025' },
 
-        'images/artworks/jane-doeprogress.gif',
-        'images/artworks/mesmmerprogress.gif',
-		'images/artworks/ellenprogress.gif',
+        { url: 'images/artworks/jane-doeprogress.gif', title: 'Jane Doe from ZZZ Progression', description: 'Character fanart', year: '2025' },
+        { url: 'images/artworks/mesmmerprogress.gif', title: 'Mesmer from Elden Ring Progression', description: 'Character fanart', year: '2025' },
+        { url: 'images/artworks/ellenprogress.gif', title: 'Ellen Joe from ZZZ Progression', description: 'Character fanart', year: '2025' },
 
-        'images/artworks/jiropfp.png',
-        'images/artworks/banner gif_2.gif',
-		'images/artworks/Jane DoeFanart.jpg',
+        { url: 'images/artworks/jiropfp.png', title: 'Profile OC', description: 'OC', year: '2025' },
+        { url: 'images/artworks/banner gif_2.gif', title: 'Animation OC', description: 'OC', year: '2025' },
+        { url: 'images/artworks/Jane DoeFanart.jpg', title: 'Jane Doe from ZZZ', description: 'Character fanart', year: '2024' },
 
-        'images/artworks/SachipiecePNG.png',
-        'images/artworks/mesmmer.png',
-		'images/artworks/nulgath weaponfinal.png',
+        { url: 'images/artworks/SachipiecePNG.png', title: 'Vtuber Commision', description: 'Commission Art', year: '2024' },
+        { url: 'images/artworks/mesmmer.png', title: 'Mesmer from Elden Ring', description: 'Character fanart', year: '2024' },
+        { url: 'images/artworks/nulgath weaponfinal.png', title: 'Weapon Art', description: 'Weapon Contest Winner AQW Link: https://surl.li/wchbpz', year: '2024' },
 
-        'images/artworks/clorindefanart.png',
-        'images/artworks/rainhoeNewYear.jpg',
-		'images/artworks/Jiroprogressgif.gif',
+        { url: 'images/artworks/clorindefanart.png', title: 'Clorinde From Genshin Impact', description: 'Commission Art', year: '2024' },
+        { url: 'images/artworks/rainhoeNewYear.jpg', title: 'Rainhoe Vtuber', description: 'Commission Art', year: '2024' },
+        { url: 'images/artworks/Jiroprogressgif.gif', title: 'Jiro Piece Progression', description: 'OC fanart', year: '2023' },
 
-        'images/artworks/Jiro.jpg',
-        'images/artworks/Jironot.jpg',
-		'images/artworks/nyxara.jpg',
+        { url: 'images/artworks/Jiro.jpg', title: 'Jiro Polished Art', description: 'OC fanart', year: '2023' },
+        { url: 'images/artworks/Jironot.jpg', title: 'Jiro Unpolished Art', description: 'OC fanart', year: '2023' },
+        { url: 'images/artworks/nyxara.jpg', title: 'Character Design Nyxara', description: 'character Design', year: '2023' },
+
+        { url: 'images/artworks/oc1.png', title: 'Original Character', description: 'OC fanart', year: '2023' },
+        { url: 'images/artworks/rainfanart.png', title: 'Rainhoe Vtuber', description: 'Commissioned Art', year: '2023' },
+        { url: 'images/artworks/Toxjin.jpg', title: 'OC', description: 'Banner Art', year: '2020' },
 		
-		'images/artworks/oc1.png',
-		'images/artworks/rainfanart.png',
-		'images/artworks/toxjin.jpg',
+        { url: 'images/artworks/toxjin.gif', title: 'OC animation', description: 'OC fanart', year: '2020' },
+        { url: 'images/artworks/jiel.jpg', title: 'OC', description: 'Fan Art', year: '2023' },
+        { url: 'images/artworks/sorrow.jpg', title: 'OC', description: 'Fan Art', year: '2020' },
 		
-		'images/artworks/toxjin.gif',
-		'images/artworks/jiel.jpg',
-		'images/artworks/sorrow.jpg',
+        { url: 'images/artworks/game characnew.jpg', title: 'Aqw Character Art', description: 'Fanart', year: '2020' },
+        { url: 'images/artworks/dragonbornnewmark.jpg', title: 'Aqw Character Art', description: 'Fanart', year: '2020' },
+        { url: 'images/artworks/sepnew.jpg', title: 'OC', description: 'Fan Art', year: '2020' },
 		
-		'images/artworks/game characnew.jpg',
-		'images/artworks/dragonbornnewmark.jpg',
-		'images/artworks/sepnew.jpg',
+        { url: 'images/artworks/pokemonnew.jpg', title: 'Pokemon Design', description: 'Fanart', year: '2020' },
+        { url: 'images/artworks/gunner.jpg', title: 'Aqw Character Art', description: 'Fan Art', year: '2020' },
+        { url: 'images/artworks/infecnew.jpg', title: 'OC', description: 'Character Design', year: '2020' },
+
+        { url: 'images/artworks/ayana_irys kaiju.jpg', title: 'Commissioned Art', description: 'Commissioned Art Fiver', year: '2020' },
+        { url: 'images/artworks/kenny_ gamera kaiju.jpg', title: 'Commissioned Art', description: 'Commissioned Art Fiver', year: '2020' },
+        { url: 'images/artworks/barugonnkid.jpg', title: 'Commissioned Art', description: 'Commissioned Art Fiver', year: '2020' },
+
+        { url: 'images/artworks/newpfp.png', title: 'OC new new new pfp', description: 'OC fanart', year: '2024' },
+        { url: 'images/artworks/pfp.png', title: 'OC new new pfp', description: 'Commissioned Art', year: '2023' },
+        { url: 'images/artworks/dp121.jpg', title: 'OC new pfp', description: 'Bannger Art', year: '2019' },
 		
-		'images/artworks/pokemonnew.jpg',
-		'images/artworks/gunner.jpg',
-		'images/artworks/infecnew.jpg',
-		
-		'images/artworks/ayana_irys kaiju.jpg',
-		'images/artworks/kenny_ gamera kaiju.jpg',
-		'images/artworks/barugonnkid.jpg',
-		
-		'images/artworks/newpfp.png',
-		'images/artworks/pfp.png',
-		'images/artworks/dp121.jpg',
-		
-		'images/artworks/naruto.jpg',
-		'images/artworks/toga himiko.jpg',
-		'images/artworks/glitchinggirl.jpg',
-		
-		'images/artworks/hu tao.jpg',
-		'images/artworks/xing.jpg',
-		'images/artworks/warrior seraph.jpg',
+        { url: 'images/artworks/naruto.jpg', title: 'Naruto Fanart', description: 'Art for fun', year: '2020' },
+        { url: 'images/artworks/toga himiko.jpg', title: 'Toga Himiko', description: 'Commissioned Art Fiver', year: '2020' },
+        { url: 'images/artworks/glitchinggirl.jpg', title: 'Commissioned Art', description: 'Commissioned Art Fiver', year: '2020' },
+
+        { url: 'images/artworks/hu tao.jpg', title: 'Hu tao from Genshin Impact', description: 'Fan Art', year: '2021' },
+        { url: 'images/artworks/xing.jpg', title: 'Xingqiu from Genshin Impact', description: 'Fan Art', year: '2021' },
+        { url: 'images/artworks/warrior seraph.jpg', title: 'Aqw character Art', description: 'Fan Art', year: '2018' },
        
     ];
 
@@ -317,5 +350,4 @@ document.addEventListener("DOMContentLoaded", function () {
   // Check on scroll
   window.addEventListener("scroll", checkVisibility);
 });
-
 
