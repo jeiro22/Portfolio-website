@@ -110,9 +110,9 @@ function createImageContainers(container, items) {
         { url: 'images/artworks/kenny_ gamera kaiju.jpg', title: 'Commissioned Art', description: 'Commissioned Art Fiver', year: '2020' },
         { url: 'images/artworks/barugonnkid.jpg', title: 'Commissioned Art', description: 'Commissioned Art Fiver', year: '2020' },
 
-        { url: 'images/artworks/newpfp.png', title: 'OC new new new pfp', description: 'OC fanart', year: '2024' },
-        { url: 'images/artworks/pfp.png', title: 'OC new new pfp', description: 'Commissioned Art', year: '2023' },
-        { url: 'images/artworks/dp121.jpg', title: 'OC new pfp', description: 'Bannger Art', year: '2019' },
+        { url: 'images/artworks/newpfp.png', title: 'OC new new new pfp', description: 'OC art', year: '2024' },
+        { url: 'images/artworks/pfp.png', title: 'OC new new pfp', description: 'OC Art', year: '2023' },
+        { url: 'images/artworks/dp121.jpg', title: 'OC new pfp', description: 'OC Art', year: '2019' },
 		
         { url: 'images/artworks/naruto.jpg', title: 'Naruto Fanart', description: 'Art for fun', year: '2020' },
         { url: 'images/artworks/toga himiko.jpg', title: 'Toga Himiko', description: 'Commissioned Art Fiver', year: '2020' },
